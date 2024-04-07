@@ -51,34 +51,21 @@ class MainActivity : AppCompatActivity() {
         val refresh = findViewById<ImageView>(R.id.refresh)
 
 
-        val toggleOnlineStatus = findViewById<ToggleButton>(R.id.toggleOnlineStatus)
-        toggleOnlineStatus.isChecked = hasNetworkConnection(this)
-
-        toggleOnlineStatus.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                toggleOnlineStatus.text = "Online"
-            } else {
-                toggleOnlineStatus.text = "Offline"
-            }
-        }
-
+        checkOnline()
         refresh.setOnClickListener {
-            toggleOnlineStatus.isChecked = hasNetworkConnection(this)
-
-            toggleOnlineStatus.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-
-                    toggleOnlineStatus.text = "Online"
-
-                } else {
-
-                    toggleOnlineStatus.text = "Offline"
-
-                }
-            }
+            checkOnline()
         }
         bt_send.setOnClickListener {
-            Onlocation()
+            val isOnline = checkOnline()
+            // Use the value of isOnline as needed
+            if (isOnline) {
+                val intent = Intent(this, overseasTransfer::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            } else {
+                Onlocation()
+            }
+
         }
         val buttonClick2 = findViewById<Button>(R.id.buy_token_main)
         bt_receive.setOnClickListener {
@@ -225,7 +212,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun checkOnline(): Boolean {
+        val toggleOnlineStatus = findViewById<ToggleButton>(R.id.toggleOnlineStatus)
+        val isConnected = hasNetworkConnection(this)
+        toggleOnlineStatus.isChecked = isConnected
 
+        toggleOnlineStatus.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                toggleOnlineStatus.text = "Online"
+            } else {
+                toggleOnlineStatus.text = "Offline"
+            }
+        }
+
+        return isConnected
+    }
     private fun hasNetworkConnection(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
