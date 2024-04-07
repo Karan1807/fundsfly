@@ -75,6 +75,12 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation ("com.airbnb.android:lottie:5.0.3")
     implementation ("com.google.android.material:material:<1.7.0-alpha01>")
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("com.google.android.gms:play-services-nearby:18.1.0")
+    implementation ("org.web3j:core:5.0.0")
+    implementation ("org.web3j:crypto:5.0.0")
+    implementation ("org.bouncycastle:bcprov-jdk15on:1.70")
+
 
 
 
