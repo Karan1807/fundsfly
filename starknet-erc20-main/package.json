@@ -1,0 +1,20 @@
+{
+  "name": "fundsfly",
+  "version": "1.0.0",
+  "description": "send funds accross the globe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kishan Patel",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "express": "^4.19.2",
+    "get-starknet": "^3.0.1",
+    "starknet": "^6.7.0"
+  },
+  "devDependencies": {
+    "tslib": "^2.6.2"
+  }
+}

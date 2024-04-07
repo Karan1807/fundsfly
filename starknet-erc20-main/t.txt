@@ -1,0 +1,13 @@
+Created new encrypted keystore file: /Users/max/.starkli-wallets/deployer/keystore.json
+Public key: 0x03421ef4fc4e4d31e723c728c2df3f9733b99f9fafd1cefe67d6df7058796478
+
+
+Deploying class 0x05795c2dae89853f720f8ea2e185bc8ba737b6f57f72753e973b476db6f12616 with salt 0x045aa7ae5981e56f3f418a7b956b045126ff89de9ae59eccc1427dd0c3098bfd...
+The contract will be deployed at address 0x03a5de3cd67b053552ef90cf008db8eec1baacf250760690d44784257fdbda5a
+Contract deployment transaction: 0x03f2546e7181f70f3de08d162512a2807dfa8ac9261493229800f4c7eb094b59
+Contract deployed:
+0x03a5de3cd67b053552ef90cf008db8eec1baacf250760690d44784257fdbda5a
+
+
+
+acc2: 0x034Ee2c04696F7f22fA2C5e8488a361E7Bd16A4a3bf32F50039fe37c29010446
