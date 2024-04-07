@@ -45,7 +45,7 @@ class buy_navi : AppCompatActivity() {
                         val jsonObject = JSONObject(response)
                         val mes = jsonObject.getString("message")
                         if(mes == "Transfer SuccessFull!") {
-                            if (b != null) {
+                            if (b == null) {
                                 b = (b!!.toInt() + amount.toInt()).toString()
                             }
                             Toast.makeText(this, "Coins Updated Successfully!", Toast.LENGTH_SHORT)

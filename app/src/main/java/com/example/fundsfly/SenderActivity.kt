@@ -44,7 +44,7 @@ class SenderActivity : AppCompatActivity() {
     }
 
     private fun startDiscovery() {
-        val SERVICE_ID = "com.example.wc"
+        val SERVICE_ID = "com.example.fundsfly"
         val discoveryOptions = DiscoveryOptions.Builder().setStrategy(Strategy.P2P_POINT_TO_POINT).build()
         Nearby.getConnectionsClient(applicationContext)
             .startDiscovery(SERVICE_ID, endpointDiscoveryCallback, discoveryOptions)

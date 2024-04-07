@@ -11,8 +11,10 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -43,12 +45,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-
         val bt_send = findViewById<Button>(R.id.send_main)
         val balance = findViewById<TextView>(R.id.Balance)
         val bt_receive = findViewById<Button>(R.id.receive_main)
+        val refresh = findViewById<ImageView>(R.id.refresh)
+
+
+        val toggleOnlineStatus = findViewById<ToggleButton>(R.id.toggleOnlineStatus)
+        toggleOnlineStatus.isChecked = hasNetworkConnection(this)
+
+        toggleOnlineStatus.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                toggleOnlineStatus.text = "Online"
+            } else {
+                toggleOnlineStatus.text = "Offline"
+            }
+        }
+
+        refresh.setOnClickListener {
+            toggleOnlineStatus.isChecked = hasNetworkConnection(this)
+
+            toggleOnlineStatus.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+
+                    toggleOnlineStatus.text = "Online"
+
+                } else {
+
+                    toggleOnlineStatus.text = "Offline"
+
+                }
+            }
+        }
         bt_send.setOnClickListener {
             Onlocation()
         }
@@ -72,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                         val bal = jsonObject.getString("message")
                         Log.d(TAG, "onCreate: Main $bal")
                         editor.putString("balance", bal)
-                        balance.text = sharedPreferences.getString("balance", "0")
+                        balance.text = sharedPreferences.getString("balance", "10")
                     }
                 },
                 Response.ErrorListener { error ->
@@ -110,13 +138,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
         if (!sharedPreferences.getBoolean("updateb_once", false)) {  //test
             editor.putBoolean("updateb_once", true)
             editor.putString("balance", "0")
             editor.commit()
         }
-        balance.text = sharedPreferences.getString("balance", "0")
+        balance.text = sharedPreferences.getString("balance", "10")
         CheckPermission()
 
 
