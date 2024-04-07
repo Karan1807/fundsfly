@@ -38,7 +38,7 @@ class buy_navi : AppCompatActivity() {
 
 
             val queue = Volley.newRequestQueue(this)
-            val url = "http://ec2-3-144-33-176.us-east-2.compute.amazonaws.com:3000/transfer"
+            val url = "http://ec2-54-89-83-185.compute-1.amazonaws.com/transfer"
             val stringRequest = object : StringRequest(Request.Method.POST, url,
                 Response.Listener { response ->
                     run {

@@ -46,7 +46,7 @@ class RecieveActivity : AppCompatActivity() {
     }
 
     private fun startAdvertising() {
-        val SERVICE_ID = "com.example.wc"
+        val SERVICE_ID = "com.example.fundsfly"
         val advertisingOptions = AdvertisingOptions.Builder().setStrategy(Strategy.P2P_POINT_TO_POINT).build()
         Nearby.getConnectionsClient(applicationContext)
             .startAdvertising(

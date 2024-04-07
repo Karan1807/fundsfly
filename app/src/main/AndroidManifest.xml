@@ -3,18 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission  android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission  android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission  android:name="android.permission.BLUETOOTH" />
+    <uses-permission  android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission  android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission  android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission  android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission  android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -23,15 +25,15 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
-            android:name=".overseasTransfer"
+            android:name=".send"
             android:exported="false"
             android:theme="@style/Theme.AppTheme"/>
         <activity
-            android:name=".quantity_entry"
+            android:name=".overseasTransfer"
             android:exported="false"
             android:theme="@style/Theme.AppTheme" />
         <activity
-            android:name=".SenderActivity"
+            android:name=".quantity_entry"
             android:exported="false"
             android:theme="@style/Theme.AppTheme" />
         <activity

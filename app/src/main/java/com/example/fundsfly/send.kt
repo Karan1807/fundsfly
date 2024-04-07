@@ -3,45 +3,58 @@ package com.example.fundsfly
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.gson.Gson
+import org.json.JSONObject
 
-class SenderActivity : AppCompatActivity() {
+class send : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
     lateinit var amount: String
     lateinit var accountID: String
     lateinit var accountKey: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sender)
+        setContentView(R.layout.activity_send)
         sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         val b = sharedPreferences.getString("balance","")
+        sharedPreferences = getSharedPreferences("online_status",Context.MODE_PRIVATE)
+        val isOnline = sharedPreferences.getBoolean("online_status",false)
         accountID = sharedPreferences.getString("accountID", "").toString()
         accountKey = sharedPreferences.getString("accountKey", "").toString()
         val Balance_rec = findViewById<TextView>(R.id.Balance_trans)
         Balance_rec.text=b
         amount = intent.getStringExtra("amount").toString()
+        val editor = sharedPreferences.edit()
 
         val buttonClick = findViewById<ImageView>(R.id.back_button_transaction)
         buttonClick.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+
+
         }
     }
     override fun onStart() {
         super.onStart()
         startDiscovery()
     }
+
 
     private fun startDiscovery() {
         val SERVICE_ID = "com.example.fundsfly"
@@ -55,6 +68,7 @@ class SenderActivity : AppCompatActivity() {
             .addOnFailureListener { e: Exception? ->
                 Toast.makeText(applicationContext,"Error Connecting to teacher: ${e.toString()}",
                     Toast.LENGTH_SHORT).show()
+                Log.e(TAG,"Error:${e.toString()}")
             }
     }
     private val endpointDiscoveryCallback: EndpointDiscoveryCallback =
@@ -62,7 +76,7 @@ class SenderActivity : AppCompatActivity() {
             override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
                 // An endpoint was found. We request a connection to it.
                 Nearby.getConnectionsClient(applicationContext)
-                    .requestConnection("F", endpointId, connectionLifecycleCallback) //change to faulty name- first param
+                    .requestConnection("Navi", endpointId, connectionLifecycleCallback) //change to faulty name- first param
                     .addOnSuccessListener(
                         OnSuccessListener { unused: Void? -> })
                     .addOnFailureListener(
@@ -78,7 +92,7 @@ class SenderActivity : AppCompatActivity() {
             val data_recieved = payload.asBytes()?.let { String(it, Charsets.UTF_8) }
             Log.d(TAG, "onPayloadReceived: ${Gson().toJson(data_recieved)}")
             Toast.makeText(applicationContext,"Data received $data_recieved", Toast.LENGTH_SHORT).show()
-            if(data_recieved=="Success"){
+
                 val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
                 var b = sharedPreferences.getString("balance","")
                 if (b != null) {
@@ -91,7 +105,7 @@ class SenderActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-            }
+
         }
         override fun onPayloadTransferUpdate(endpointId: String, update: PayloadTransferUpdate) {
 
@@ -145,5 +159,23 @@ class SenderActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "SenderActivity"
+    }
+    private fun hasNetworkConnection(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                return true
+            }
+        }
+        return false
     }
 }

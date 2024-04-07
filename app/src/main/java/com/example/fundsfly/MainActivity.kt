@@ -17,9 +17,7 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ResolvableApiException
@@ -59,10 +57,20 @@ class MainActivity : AppCompatActivity() {
             val isOnline = checkOnline()
             // Use the value of isOnline as needed
             if (isOnline) {
+                val sharedPreferences = getSharedPreferences("online_status", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("is_online", isOnline)
+                editor.apply()
+
                 val intent = Intent(this, overseasTransfer::class.java)
+                intent.putExtra("isOnline", isOnline)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             } else {
+                val sharedPreferences = getSharedPreferences("online_status", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putBoolean("is_online", false)
+                editor.apply()
                 Onlocation()
             }
 
@@ -76,31 +84,43 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor= sharedPreferences.edit()
         val accountID = sharedPreferences.getString("accountID", "")
+        Log.d(TAG,"accountID ${accountID}")
 
         if(hasNetworkConnection(this)){
             val queue = Volley.newRequestQueue(this)
-            val url = "http://ec2-3-144-33-176.us-east-2.compute.amazonaws.com:3000/tokenbalance"
-            val stringRequest = object : StringRequest(Request.Method.POST, url,
+            val url = "http://ec2-54-89-83-185.compute-1.amazonaws.com/balance"
+            val stringRequest = object : StringRequest(Method.POST, url,
                 Response.Listener { response ->
                     run {
                         val jsonObject = JSONObject(response)
                         val bal = jsonObject.getString("message")
                         Log.d(TAG, "onCreate: Main $bal")
                         editor.putString("balance", bal)
-                        balance.text = sharedPreferences.getString("balance", "10")
+                        balance.text = sharedPreferences.getString("balance", "0")
                     }
                 },
                 Response.ErrorListener { error ->
                     run {
-                        Toast.makeText(applicationContext, "$error", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "$error")
+//                        Toast.makeText(applicationContext, "$error", Toast.LENGTH_SHORT).show()
+//                        Log.d(TAG, "$error")
                     }
                 }) {
-                override fun getParams(): Map<String, String> {
+                override fun getParams(): MutableMap<String, String>? {
                     val params = HashMap<String, String>()
                     params["address"] = accountID.toString()
-
+                    Log.d(TAG,"params:${params}")
                     return params
+//
+
+                    }
+
+
+
+                override fun getHeaders(): Map<String, String>? {
+                    val headers: MutableMap<String, String> = HashMap()
+                    headers["Content-Type"] = "application/json"
+
+                    return headers
                 }
 
             }
@@ -130,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             editor.putString("balance", "0")
             editor.commit()
         }
-        balance.text = sharedPreferences.getString("balance", "10")
+        balance.text = sharedPreferences.getString("balance", "")
         CheckPermission()
 
 

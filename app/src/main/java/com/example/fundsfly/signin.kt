@@ -82,7 +82,7 @@ class signin : AppCompatActivity() {
 
 
                 val queue = Volley.newRequestQueue(this)
-                val url = "http://ec2-3-144-33-176.us-east-2.compute.amazonaws.com:3000/createacc"
+                val url = "http://ec2-54-89-83-185.compute-1.amazonaws.com/newaccount"
                 val stringRequest = StringRequest(
                     Request.Method.POST, url,
                     { response ->
