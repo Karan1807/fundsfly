@@ -1,13 +1,14 @@
 package com.example.fundsfly
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.ObjectsCompat.hash
 import com.google.android.material.textfield.TextInputEditText
 import okhttp3.internal.tls.OkHostnameVerifier.verify
@@ -32,11 +33,13 @@ import java.math.BigInteger
 import java.nio.charset.Charset
 import java.security.Security
 import java.util.Objects.hash
-class amount : AppCompatActivity() {
+
+
+class quantity_entry : AppCompatActivity() {
     private val TAG = "amountentry"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_amount)
+        setContentView(R.layout.activity_quantity_entry)
         val amount = findViewById<TextInputEditText>(R.id.amount_send)
         val back_button = findViewById<ImageView>(R.id.back_button_amount)
         val send_button_amount = findViewById<Button>(R.id.send_button_amount)

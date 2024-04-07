@@ -21,12 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResponse
-import com.google.android.gms.location.SettingsClient
-
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -37,13 +32,18 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import org.json.JSONObject
+
+
 class MainActivity : AppCompatActivity() {
+
     private val TAG = "MainActivity";
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
 
         val bt_send = findViewById<Button>(R.id.send_main)
@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor= sharedPreferences.edit()
         val accountID = sharedPreferences.getString("accountID", "")
+
         if(hasNetworkConnection(this)){
             val queue = Volley.newRequestQueue(this)
             val url = "http://ec2-3-144-33-176.us-east-2.compute.amazonaws.com:3000/tokenbalance"
@@ -91,9 +92,6 @@ class MainActivity : AppCompatActivity() {
             queue.add(stringRequest)
         }
 
-
-
-
         buttonClick2.setOnClickListener {
             if(!hasNetworkConnection(this)){
                 Toast.makeText(this, "No Internet Connection, Please try again.", Toast.LENGTH_SHORT).show()
@@ -105,7 +103,13 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+
         }
+
+
+
+
+
 
         if (!sharedPreferences.getBoolean("updateb_once", false)) {  //test
             editor.putBoolean("updateb_once", true)
@@ -114,6 +118,10 @@ class MainActivity : AppCompatActivity() {
         }
         balance.text = sharedPreferences.getString("balance", "0")
         CheckPermission()
+
+
+
+
 
     }
 
@@ -163,10 +171,12 @@ class MainActivity : AppCompatActivity() {
         val client: SettingsClient = LocationServices.getSettingsClient(this)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
         task.addOnSuccessListener {
-            val intent = Intent(this, amount_entry::class.java)
+
+            val intent = Intent(this, quantity_entry::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             Log.d("MainActivity","task called")
+
         }
 
         task.addOnFailureListener { exception ->

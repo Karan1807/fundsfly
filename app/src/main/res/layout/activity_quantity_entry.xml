@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".amount_entry">
+    tools:context=".quantity_entry">
 
     <ImageView
         android:id="@+id/back_button_amount"
@@ -43,7 +43,7 @@
         android:id="@+id/benz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wild Coin"
+        android:text="Navi"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="@+id/view"
@@ -54,8 +54,8 @@
         android:id="@+id/benze"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WC"
-        android:textSize="15dp"
+        android:text="NV"
+        android:textSize="15sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -78,7 +78,8 @@
             android:id="@+id/amount_send"
             android:inputType="number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50sp"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +90,7 @@
         android:background="@drawable/round_corner"
         android:text="Continue and confirm to pay"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
