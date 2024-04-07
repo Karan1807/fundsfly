@@ -10,15 +10,16 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Connected Users"
+        android:text="Pay Someone"
+        android:textAlignment="center"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:padding="16dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white" />
+        android:layout_margin="25dp"
+        android:textColor="@android:color/black" />
 
     <!-- Container for each user -->
     <LinearLayout
+        android:id="@+id/ll_contacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
@@ -105,6 +106,21 @@
 
     </LinearLayout>
 
-    <!-- Add more UI elements or adjust layout as needed -->
+    <Button
+        android:id="@+id/addpayee"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/ll_contacts"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="108dp"
+        android:background="@drawable/round_corner"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Add Payee"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+
 
 </RelativeLayout>
